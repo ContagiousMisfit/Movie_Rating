@@ -21,7 +21,7 @@ class _ListPageState extends State<ListPage> {
   List<MovieModel> movieList = [
     MovieModel(
         movieName: 'POC - Programação Orientada à Cebola', movieRating: 5),
-    MovieModel(movieName: 'A lista de Stateful Widgets', movieRating: 2),
+    MovieModel(movieName: 'A lista e Stateful Widgets', movieRating: 2),
     MovieModel(
         movieName: 'UP - release na Sexta-feira altas aventuras',
         movieRating: 5),
