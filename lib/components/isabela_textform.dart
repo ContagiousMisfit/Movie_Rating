@@ -22,7 +22,8 @@ class IsabelaTextForm extends StatelessWidget {
       onEditingComplete: onEditingComplete,
       decoration: InputDecoration(
         label: Text(label),
-        border: OutlineInputBorder(),
+        border:
+            UnderlineInputBorder(borderSide: BorderSide(color: Colors.white12)),
       ),
     );
   }

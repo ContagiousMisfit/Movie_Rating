@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:isabela_3sit/components/isabela_button.dart';
 import 'package:isabela_3sit/components/isabela_card.dart';
 import 'package:isabela_3sit/components/isabela_page.dart';
@@ -14,16 +15,18 @@ class ListPage extends StatefulWidget {
 
 class _ListPageState extends State<ListPage> {
   TextEditingController movieNameController = TextEditingController();
-  TextEditingController movieRatingController = TextEditingController();
   FocusNode movieNameFocus = FocusNode();
-  FocusNode movieRatingFocus = FocusNode();
 
   List<MovieModel> movieList = [
-    MovieModel(movieName: 'A Paixão de Cristo', movieRating: '5')
+    MovieModel(
+        movieName: 'POC - Programação Orientada à Cebola', movieRating: '5'),
+    MovieModel(movieName: 'A lista de Stateful Widgets', movieRating: '2'),
+    MovieModel(
+        movieName: 'UP - release na Sexta-feira altas aventuras',
+        movieRating: '5'),
   ];
 
-  addNewTransaction(
-      {required String? movieName, required String? movieRating}) {
+  addNewMovie({required String? movieName, required String? movieRating}) {
     setState(() {
       movieList.insert(
           0,
@@ -47,7 +50,7 @@ class _ListPageState extends State<ListPage> {
   @override
   Widget build(BuildContext context) {
     return IsabelaPage(
-      pageTile: 'Filmes',
+      pageTile: 'FlutterFlix',
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -55,28 +58,25 @@ class _ListPageState extends State<ListPage> {
               focusNode: movieNameFocus,
               userInputController: movieNameController,
               label: 'Nome do Filme',
-              onEditingComplete: () {
-                movieRatingFocus.nextFocus();
-              },
             ),
             const SizedBox(
               height: 10,
             ),
-            IsabelaTextForm(
-              focusNode: movieRatingFocus,
-              userInputController: movieRatingController,
-              label: 'Avaliação do filme',
+            Center(
+              child: RatingBar.builder(
+                minRating: 1,
+                itemBuilder: (context, _) =>
+                    Icon(Icons.star, color: Colors.amber),
+                onRatingUpdate: (rating) {},
+              ),
             ),
             const SizedBox(
-              height: 5,
+              height: 25,
             ),
-            IsabelaButton(
-                buttonText: 'Adicionar novo filme',
-                onPressed: () {
-                  addNewTransaction(
-                      movieName: movieNameController.text,
-                      movieRating: movieRatingController.text);
-                }),
+            IsabelaButton(onPressed: () {
+              addNewMovie(
+                  movieName: movieNameController.text, movieRating: '5');
+            }),
             const SizedBox(
               height: 20,
             ),
@@ -98,7 +98,7 @@ class _ListPageState extends State<ListPage> {
                     },
                     child: IsabelaCard(
                       leftText: movieItem.movieName,
-                      rightText: 'R\$ ${movieItem.movieRating}',
+                      rightText: movieItem.movieRating,
                     ),
                   ),
                 );
