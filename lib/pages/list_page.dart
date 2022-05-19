@@ -16,17 +16,18 @@ class ListPage extends StatefulWidget {
 class _ListPageState extends State<ListPage> {
   TextEditingController movieNameController = TextEditingController();
   FocusNode movieNameFocus = FocusNode();
+  double movieRating = 1;
 
   List<MovieModel> movieList = [
     MovieModel(
-        movieName: 'POC - Programação Orientada à Cebola', movieRating: '5'),
-    MovieModel(movieName: 'A lista de Stateful Widgets', movieRating: '2'),
+        movieName: 'POC - Programação Orientada à Cebola', movieRating: 5),
+    MovieModel(movieName: 'A lista de Stateful Widgets', movieRating: 2),
     MovieModel(
         movieName: 'UP - release na Sexta-feira altas aventuras',
-        movieRating: '5'),
+        movieRating: 5),
   ];
 
-  addNewMovie({required String? movieName, required String? movieRating}) {
+  addNewMovie({required String? movieName, required double? movieRating}) {
     setState(() {
       movieList.insert(
           0,
@@ -37,7 +38,7 @@ class _ListPageState extends State<ListPage> {
     });
   }
 
-  Future<void> _showDialog({String? movieName, String? movieRating}) async {
+  Future<void> _showDialog({String? movieName, double? movieRating}) async {
     return showDialog<void>(
         context: context,
         builder: (BuildContext context) {
@@ -64,21 +65,23 @@ class _ListPageState extends State<ListPage> {
             ),
             Center(
               child: RatingBar.builder(
+                itemSize: 50,
                 minRating: 1,
                 itemBuilder: (context, _) =>
-                    Icon(Icons.star, color: Colors.amber),
-                onRatingUpdate: (rating) {},
+                    const Icon(Icons.star, color: Colors.purpleAccent),
+                onRatingUpdate: (rating) => setState(() {
+                  movieRating = rating;
+                }),
               ),
             ),
             const SizedBox(
-              height: 25,
+              height: 50,
             ),
-            IsabelaButton(onPressed: () {
-              addNewMovie(
-                  movieName: movieNameController.text, movieRating: '5');
-            }),
+            Center(
+              child: const Text('Lista de Filmes'),
+            ),
             const SizedBox(
-              height: 20,
+              height: 10,
             ),
             ListView.separated(
               separatorBuilder: (BuildContext context, int index) {
@@ -98,12 +101,20 @@ class _ListPageState extends State<ListPage> {
                     },
                     child: IsabelaCard(
                       leftText: movieItem.movieName,
-                      rightText: movieItem.movieRating,
+                      rightText: movieItem.movieRating.toString(),
                     ),
                   ),
                 );
               }),
-            )
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            IsabelaButton(onPressed: () {
+              addNewMovie(
+                  movieName: movieNameController.text,
+                  movieRating: movieRating);
+            }),
           ],
         ),
       ),
