@@ -10,7 +10,7 @@ class IsabelaButton extends StatelessWidget {
     return FloatingActionButton(
       onPressed: onPressed,
       backgroundColor: Colors.purple,
-      child: const Icon(Icons.navigation),
+      child: const Icon(Icons.add_outlined),
     );
   }
 }
